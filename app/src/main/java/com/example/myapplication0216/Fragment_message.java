@@ -2,11 +2,19 @@ package com.example.myapplication0216;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +22,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class Fragment_message extends Fragment {
+    private List<Fruit> fruitList = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,4 +70,30 @@ public class Fragment_message extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_message, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initFruits(); // 初始化水果数据
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        MyAdapter adapter = new MyAdapter(fruitList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void initFruits() {
+        for (int i = 0; i < 3; i++) {
+            Fruit apple = new Fruit("转账", R.drawable.tx1);
+            fruitList.add(apple);
+            Fruit banana = new Fruit("收款", R.drawable.tx2);
+            fruitList.add(banana);
+            Fruit pear = new Fruit("提醒", R.drawable.tx3);
+            fruitList.add(pear);
+            Fruit orange = new Fruit("应用", R.drawable.tx4);
+            fruitList.add(orange);
+        }
+    }
+
 }
